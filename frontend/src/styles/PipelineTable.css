@@ -1,0 +1,364 @@
+/* Main Container Styles */
+.pipeline-container {
+  max-width: 1200px; /* Slightly increased for better table visibility */
+  margin: 20px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header and Controls */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.pipeline-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  padding-top: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.date-input,
+.search-input {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.search-input {
+  width: 200px;
+}
+
+/* Table Styles */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.pipeline-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.pipeline-table th,
+.pipeline-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 13px;
+}
+
+.pipeline-table th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+  color: #333;
+}
+
+.pipeline-table th.sortable-header {
+  cursor: pointer;
+}
+
+.pipeline-table th.sortable-header:hover {
+  background-color: #f1f1f1;
+}
+
+.pipeline-table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.sort-icon {
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+.pipeline-row:hover {
+  background-color: #f5f5f5;
+  transition: background-color 0.2s ease;
+}
+
+/* Progress Bar */
+.custom-progress-bar {
+  position: relative;
+  width: 100px;
+  height: 15px;
+  background-color: #e9ecef;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.custom-progress-fill {
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+.custom-progress-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.icon-btn:hover {
+  color: #333;
+  background: none; /* Explicitly remove hover background */
+}
+
+/* Popup Styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  z-index: 1000;
+  width: 90%; /* Increased width */
+  max-width: 800px; /* Set a reasonable max-width */
+}
+
+.popup-content {
+  max-height: 600px;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.close-popup {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Comments Section */
+.comments-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.comments-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.comments-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.comment-card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.comment-datetime {
+  font-size: 12px;
+  color: #7f8c8d;
+}
+
+.comment-text {
+  margin: 0;
+  font-size: 13px;
+  color: #34495e;
+  word-break: break-word;
+}
+
+.no-comments, .no-images {
+  color: #7f8c8d;
+  font-style: italic;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.add-comment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.author-input,
+.comment-input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.comment-input {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.author-input:focus,
+.comment-input:focus {
+  outline: none;
+  border-color: #28A745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+.add-comment-btn {
+  padding: 10px 20px;
+  background: #28A745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.add-comment-btn:hover:not(:disabled) {
+  background: #218838;
+}
+
+.add-comment-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Image Gallery */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.image-item {
+  text-align: center;
+}
+
+.image-item h4 {
+  margin: 5px 0;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.image-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Status Messages */
+.error-box {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  color: #721c24;
+  font-size: 14px;
+}
+
+.loading-box {
+  text-align: center;
+  padding: 10px;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+/* Replace or update .unit-checkboxes */
+.unit-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* 5 columns, 4 rows */
+}
+
+.unit-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 3px; /* Reduced from 4px */
+  font-size: 10px; /* Reduced from 12px */
+}
+
+/* Add this new rule to make checkboxes smaller */
+.unit-checkbox input[type="checkbox"] {
+  width: 10px; /* Smaller checkbox */
+  height: 10px; /* Smaller checkbox */
+  margin: 0; /* Remove default margin for tighter fit */
+}
+
+/* Ensure table cells align icons properly (unchanged) */
+.pipeline-table td {
+  text-align: center;
+  vertical-align: middle;
+}

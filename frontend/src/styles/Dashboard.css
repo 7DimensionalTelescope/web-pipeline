@@ -21,72 +21,77 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Form (Companion Page) */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
 /* Labels (Shared) */
 .default-label {
   width: 40px;
   margin-right: 15px;
-  font-weight: bold;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 13px; /* Slightly smaller */
   text-align: left;
-  color: #333;
+  color: #444; /* Softer color */
 }
 
 .bold-label {
-  font-weight: bold;
-  font-size: 14px;
-  color: #333;
+  font-weight: 600;
+  font-size: 13px;
+  color: #444;
 }
 
 /* Status Box (Shared) */
 .dashboard-box {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 15px; /* Increased padding for consistency */
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 12px; /* Reduced padding */
+  margin-bottom: 15px; /* Reduced margin */
+  background-color: #fff; /* Pure white for contrast */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Very subtle shadow */
 }
 
 .dashboard-box.error {
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
+  background-color: #fef0f0;
+  border-color: #f8c1c1;
+  color: #9b2c2c;
+}
+
+.dashboard-box.loading {
+  background-color: #f9f9f9;
+  border-color: #e0e0e0;
+  color: #666;
 }
 
 .dashboard-header {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 15px; /* Slightly smaller */
+  margin-bottom: 8px;
   color: #333;
 }
 
 .dashboard-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px; /* Tighter gap */
 }
 
 /* Dashboard Grid */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px; /* Reduced gap */
 }
 
 .dashboard-column {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 /* GPU Box Specific */
 .gpu-box {
-  min-height: 0; /* Prevents unnecessary stretching */
+  min-height: 0;
   height: 100%;
 }
 
@@ -94,7 +99,7 @@ body {
 .status-indicator {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 40px; /* Reduced gap */
   width: 100%;
 }
 
@@ -103,28 +108,29 @@ body {
 }
 
 .status-value {
-  font-size: 14px;
+  font-size: 13px; /* Smaller font */
   color: #555;
   font-family: 'Courier New', Courier, monospace;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   display: block;
 }
 
 .status-bar-track {
   width: 100%;
-  height: 6px;
-  background: #ddd;
+  height: 5px; /* Thinner bar */
+  background: #e9ecef;
   border-radius: 3px;
   overflow: hidden;
 }
 
 .status-bar-fill {
   height: 100%;
+  transition: width 0.3s ease-in-out;
 }
 
 /* GPU Section */
 .gpu-section {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .gpu-section:last-child {
@@ -133,7 +139,7 @@ body {
 
 /* Local Time (Shared) */
 .local-time {
-  margin-top: 10px;
+  padding: 0px;
   display: flex;
   justify-content: flex-end;
   width: 100%;
@@ -144,6 +150,7 @@ body {
   color: #6B7280;
   font-weight: 400;
   text-align: right;
+  font-size: 12px; /* Smaller font */
 }
 
 /* Status Text (Shared) */
@@ -152,25 +159,18 @@ body {
   text-decoration: underline;
   font-size: 18px;
   color: #333;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 /* No Data */
 .no-data {
-  font-size: 14px;
-  color: #818181;
+  font-size: 13px;
+  color: #888;
   font-style: italic;
   text-align: center;
 }
 
-/* Companion Page Specific Styles */
-.group-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
-
+/* Collapse Toggle */
 .collapse-toggle {
   display: flex;
   align-items: center;
@@ -180,6 +180,9 @@ body {
   color: #007bff;
   cursor: pointer;
   margin-left: auto;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
 }
 
 .collapse-toggle:hover {
@@ -191,58 +194,68 @@ body {
   cursor: pointer;
 }
 
-.smaller-label {
-  width: max(10%, 100px);
-  margin-right: 15px;
-  font-size: 12px;
-  text-align: left;
+/* Collapsed View */
+.collapsed-view {
+  display: flex;
+  justify-content: space-around; /* Evenly spaced */
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-top: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.input-field {
-  flex-grow: 1;
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-circle {
+  width: 16px; /* Smaller circle */
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+}
+
+.status-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+}
+
+/* Core Usage */
+.core-usage-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
+  margin-top: 8px;
 }
 
-.submit-button {
-  padding: 12px;
-  font-size: 18px;
-  background-color: #007BFF;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+.core-usage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 8px); /* Smaller blocks */
+  gap: 2px;
+  flex-grow: 1;
 }
 
-.submit-button:hover {
-  background-color: #0056b3;
+.core-block {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
 }
 
-.radio-group {
-  display: flex;
-  gap: 10px;
-  font-size: 10px;
-}
-
-.mode-options {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  margin-top: 0px;
-  background-color: #f9f9f9;
-}
-
-.checkbox-group {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-.dropdown-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.dropdown-label {
-  font-size: 14px;
-  font-weight: bold;
-}
+/* Other Companion Styles (unchanged) */
+.group-container { display: flex; align-items: center; gap: 10px; width: 100%; }
+.smaller-label { width: max(10%, 100px); margin-right: 15px; font-size: 12px; text-align: left; }
+.input-field { flex-grow: 1; width: 100%; }
+.submit-button { padding: 12px; font-size: 18px; background-color: #007BFF; color: white; border-radius: 5px; cursor: pointer; }
+.submit-button:hover { background-color: #0056b3; }
+.radio-group { display: flex; gap: 10px; font-size: 10px; }
+.mode-options { border: 1px solid #ccc; border-radius: 8px; padding: 16px; margin-top: 0px; background-color: #f9f9f9; }
+.checkbox-group { display: flex; gap: 15px; align-items: center; }
+.dropdown-container { display: flex; align-items: center; gap: 10px; }
+.dropdown-label { font-size: 14px; font-weight: bold; }

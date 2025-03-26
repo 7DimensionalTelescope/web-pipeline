@@ -1,6 +1,6 @@
 {
-  "short_name": "7DT ToO",
-  "name": "7DT ToO request form",
+  "short_name": "7DT Pipeline",
+  "name": "7DT Pipeline Monitor",
   "icons": [
     {
       "src": "favicon.ico",

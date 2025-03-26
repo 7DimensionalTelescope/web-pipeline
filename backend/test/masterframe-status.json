@@ -1,0 +1,28 @@
+[
+    {
+      "bias": true,
+      "dark": true,
+      "date": "2025-01-01",
+      "flat": [
+        "g",
+        "m550",
+        "m575"
+      ],
+      "gain": "2750",
+      "n_binning": "1",
+      "unit": "7DT05"
+    },
+    {
+      "bias": true,
+      "dark": true,
+      "date": "2025-01-01",
+      "flat": [
+        "g",
+        "m425",
+        "m850"
+      ],
+      "gain": "2750",
+      "n_binning": "1",
+      "unit": "7DT11"
+    }
+  ]

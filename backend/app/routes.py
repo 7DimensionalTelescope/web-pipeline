@@ -1,27 +1,21 @@
-from flask import g, Blueprint, send_from_directory, jsonify
+from flask import g, Blueprint, send_from_directory, jsonify, current_app, request, send_file
 import os
 import base64
-
 from dotenv import load_dotenv
+import json
 
-import subprocess
-import psutil
-
-import platform
 
 load_dotenv()
 
-api_bp = Blueprint('api', __name__, static_folder='../../frontend/build')
-
-DATA_FOLDER = os.getenv('DATA_FOLDER', './data')
+api_bp = Blueprint('pipeline', __name__)
 
 @api_bp.route('/')
 def serve():
-    return send_from_directory(api_bp.static_folder, 'index.html')
+    return send_from_directory(current_app.static_folder, 'index.html')
 
-@api_bp.route('/<path:path>')
-def static_proxy(path):
-    return send_from_directory(api_bp.static_folder, path)
+# @api_bp.route('/<path:path>')
+# def static_proxy(path):
+#     return send_from_directory(current_app.static_folder, '/static/' + path)
 
 def generate_nonce():
     g.nonce = base64.b64encode(os.urandom(16)).decode('utf-8')
@@ -30,7 +24,6 @@ def generate_nonce():
 def add_header(response):
     generate_nonce()
     nonce = g.nonce
-
     response.set_cookie(
         'key', 
         'value', 
@@ -57,84 +50,221 @@ def add_header(response):
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
     return response
 
-def get_cpu_info():
-    try:
-        cores = psutil.cpu_count()
-        # Try to get CPU model information
-        cpu_info = "Unknown"
-        if platform.system() == "Linux":
-            try:
-                with open("/proc/cpuinfo", "r") as f:
-                    for line in f:
-                        if "model name" in line:
-                            cpu_info = line.split(":")[1].strip()
-                            break
-            except:
-                pass
-        elif platform.system() == "Windows":
-            cpu_info = platform.processor()
-        elif platform.system() == "Darwin":  # macOS
-            cpu_info = subprocess.check_output(["sysctl", "-n", "machdep.cpu.brand_string"]).decode().strip()
-        
-        return cores, cpu_info
-    except Exception as e:
-        print(f"Error getting CPU info: {e}")
-        return None, None
-
-def get_gpu_info():
-    try:
-        # Get detailed GPU information
-        gpu_info = []
-        
-        # Get memory usage
-        output = subprocess.check_output(['nvidia-smi', '--query-gpu=index,memory.used,memory.total,name,temperature.gpu,utilization.gpu', 
-                                         '--format=csv,noheader,nounits'])
-        
-        for line in output.decode().strip().split('\n'):
-            if line:
-                parts = [part.strip() for part in line.split(',')]
-                if len(parts) >= 6:
-                    gpu_info.append({
-                        'index': int(parts[0]),
-                        'used': int(parts[1]),
-                        'total': int(parts[2]),
-                        'name': parts[3],
-                        'temperature': int(parts[4]),
-                        'utilization': int(parts[5])
-                    })
-                else:
-                    # Fallback for older nvidia-smi versions
-                    gpu_info.append({
-                        'used': int(parts[0]) if len(parts) > 0 else 0,
-                        'total': int(parts[1]) if len(parts) > 1 else 0
-                    })
-                    
-        return gpu_info
-    except Exception as e:
-        print(f"Error getting GPU info: {e}")
-        # Return empty list if no GPU or nvidia-smi not available
-        return []
-
-@api_bp.route('/status', methods=['GET'])
+@api_bp.route('/api/status', methods=['GET'])
 def get_status():
-    # Get CPU information
-    cpu_cores, cpu_model = get_cpu_info()
-    
-    status = {
-        'cpu_percent': psutil.cpu_percent(interval=0.5),
-        'cpu_cores': cpu_cores,
-        'cpu_info': cpu_model,
-        'memory': {
-            'total': psutil.virtual_memory().total,
-            'used': psutil.virtual_memory().used,
-            'percent': psutil.virtual_memory().percent
-        },
-        'disk': {
-            'total': psutil.disk_usage('/').total,
-            'free': psutil.disk_usage('/').free,
-            'percent': psutil.disk_usage('/').percent
-        },
-        'gpu': get_gpu_info()
-    }
-    
+    """Get system status - returns cached values"""
+    try:
+        with open('/tmp/system_status.json', 'r') as f:
+            status=json.load(f)
+    except FileNotFoundError:
+        status ={}
     return jsonify(status)
+
+@api_bp.route('/api/pipeline-status')
+def get_pipeline_status():
+    date = request.args.get('date')
+    from .monitor import scan_processed_folder
+    pipeline_data = scan_processed_folder("2025-01-01")
+    return jsonify(pipeline_data)
+
+@api_bp.route('/api/masterframe-status')
+def get_masterframe_status():
+    date = request.args.get('date')
+    from .monitor import scan_masterframe_folder
+    masterframe_data = scan_masterframe_folder("2025-01-01")
+    return jsonify(masterframe_data)
+
+@api_bp.route('/api/text', methods=['GET'])
+def get_text():
+    from .monitor import link_to_config, link_to_log, param_set
+    date, gain, n_binning, obj, unit, filt, masterframe = param_set(request)
+    dtype = request.args.get("dtype")
+    
+    try:
+        if dtype == "config":
+            filename = link_to_config(date, gain, n_binning, obj, unit, filt, masterframe)
+        elif dtype == "log":
+            filename, _ = link_to_log(date, gain, n_binning, obj, unit, filt, masterframe)
+        elif dtype == "debug":
+            _, filename = link_to_log(date, gain, n_binning, obj, unit, filt, masterframe)
+        else:
+            return jsonify({'error': 'Invalid dtype'}), 400
+        
+        if not os.path.exists(filename):
+            return jsonify({'error': 'File not found'}), 404
+
+        with open(filename, 'r') as file:
+            content = file.read()
+            
+        # Detect file type and format response accordingly
+        if filename.endswith(".json"):
+            try:
+                json_content = json.loads(content)  # Parse JSON
+                return jsonify({'type': 'config', 'content': json_content})  # Return structured JSON
+            except json.JSONDecodeError:
+                return jsonify({'error': 'Invalid JSON format'}), 400
+        else:
+            return jsonify({'type': 'log', 'content': content})  # Return log as plain text
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@api_bp.route('/api/images')
+def get_images():
+    from .const import DATA_DIR
+    from .monitor import link_to_images, param_set
+    date, gain, n_binning, obj, unit, filt, masterframe = param_set(request)
+
+    images_list = link_to_images(date, gain, n_binning, obj, unit, filt, masterframe)
+
+    if len(images_list) == 0:
+        return jsonify({
+                "success": False,
+                "error": "No images found"
+        })
+    else:
+        names = []
+        for image in images_list:
+            image = image.replace(DATA_DIR, "")
+            names.append(os.path.basename(image))
+        return jsonify({
+                "success": True,
+                "images": images_list,
+                "names": names
+        })
+
+@api_bp.route('/api/image')
+def get_image():
+    from .const import DATA_DIR
+    filename = request.args.get("filename")
+    
+    """Serve an individual image by filename"""
+    image_path = os.path.join(DATA_DIR, filename)
+    try:
+        if os.path.exists(image_path) and os.path.isfile(image_path):
+            # Send the file directly to the client
+            return send_file(image_path)
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Image not found"
+            }), 404
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+@api_bp.route('/api/comments', methods=["GET", "POST"])
+def get_comments():
+    """Handle GET and POST requests for comments.
+    
+    GET: Retrieve comments for a specific pipeline entry.
+    POST: Add a new comment to the comments file.
+    """
+    from .monitor import link_to_comments, param_set
+    
+    date, gain, n_binning, obj, unit, filt, masterframe = param_set(request)
+    
+    comments_file = link_to_comments(date, gain, n_binning, obj, unit, filt, masterframe=masterframe)
+    if request.method == "POST":
+        # Handle adding a new comment
+        data = request.json
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+
+        comment = {
+            "author": data["author"],
+            "datetime": data["datetime"],  # Keep consistent with frontend
+            "text": data["comment"]
+        }
+
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(comments_file), exist_ok=True)
+
+        # Append the comment to the file
+        try:
+            with open(comments_file, "a") as f:
+                f.write(f"{comment['author']}|{comment['datetime']}|{comment['text']}\n")
+            return jsonify({"success": True})
+        except Exception as e:
+            return jsonify({"error": f"Failed to write comment: {str(e)}"}), 500
+
+    else:  # GET request
+        # Retrieve existing comments
+        comments = []
+        try:
+            with open(comments_file, "r") as f:
+                for line in f:
+                    # Split the line, ensuring it has exactly 3 parts
+                    parts = line.strip().split("|", 2)
+                    if len(parts) != 3:
+                        continue  # Skip malformed lines
+                    author, datetime, text = parts
+                    comments.append({"author": author, "datetime": datetime, "text": text})
+        except FileNotFoundError:
+            pass  # Return empty list if file doesn't exist
+        
+        return jsonify({'comments': comments})
+
+@api_bp.route('/api/rerun', methods=["POST"])
+def rerun_pipeline():
+    from .monitor import param_set
+    import numpy as np
+    try:
+        date, gain, n_binning, obj, unit, filt, masterframe = param_set(request)
+
+        obs_params = {
+            'date': date,
+            'obj': obj,
+            'unit': unit,
+            'filter': filt,
+            'gain': int(gain),
+            'n_binning': int(n_binning),
+            'masterframe': bool(masterframe)
+        }
+
+        np.save(f"/tmp/pipeline/request_{np.random.randint(0, 1000000)}.npy", obs_params)
+
+        return jsonify({
+            "success": True, 
+            "message": "Pipeline rerun completed successfully"
+        })
+
+    except Exception as e:
+        return jsonify({
+            "success": False, 
+            "error": str(e)
+        }), 500
+
+# for testing
+# @api_bp.route('/api/status', methods=['GET'])
+# def get_status():
+#     """Get system status - returns cached values"""
+#     try:
+#         with open(SCRIPT_DIR + '/test/status.json', 'r') as f:
+#             status=json.load(f)
+#     except FileNotFoundError:
+#         status ={}
+#     return jsonify(status)
+
+# @api_bp.route('/api/pipeline-status')
+# def get_pipeline_status():
+#     try:
+#         date = request.args.get('date')
+#         with open(SCRIPT_DIR + '/test/pipeline-status.json', 'r') as f:
+#             status=json.load(f)
+#     except FileNotFoundError:
+#         status ={}
+#     return jsonify(status)
+
+# @api_bp.route('/api/masterframe-status')
+# def get_masterframe_status():
+#     try:
+#         date = request.args.get('date')
+#         with open(SCRIPT_DIR + '/test/masterframe-status.json', 'r') as f:
+#             status=json.load(f)
+#     except FileNotFoundError:
+#         status ={}
+#     return jsonify(status)
+
