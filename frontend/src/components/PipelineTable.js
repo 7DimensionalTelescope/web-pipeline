@@ -252,18 +252,45 @@ const PipelineTable = () => {
         enableSorting: false,
       },
       {
-        header: <WarningIcon fontSize="small" color="red" />,
+        header: <WarningIcon fontSize="small" />,
         accessorKey: "warnings",
+        cell: ({ getValue }) => {
+          const value = getValue() || 0;
+          return value > 0 ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <WarningIcon fontSize="small" style={{ color: "#FFA500" }} />
+              <span style={{ color: "#FFA500", fontWeight: "bold" }}>{value}</span>
+            </span>
+          ) : null;
+        },
         enableSorting: true,
       },
       {
-        header: <ErrorIcon fontSize="small" color="red" />,
+        header: <ErrorIcon fontSize="small" />,
         accessorKey: "errors",
+        cell: ({ getValue }) => {
+          const value = getValue() || 0;
+          return value > 0 ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <ErrorIcon fontSize="small" style={{ color: "#FF0000" }} />
+              <span style={{ color: "#FF0000", fontWeight: "bold" }}>{value}</span>
+            </span>
+          ) : null;
+        },
         enableSorting: true,
       },
       {
-        header: <CommentIcon fontSize="small" color="blue"/>,
+        header: <CommentIcon fontSize="small" />,
         accessorKey: "comments",
+        cell: ({ getValue }) => {
+          const value = getValue() || 0;
+          return value > 0 ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <CommentIcon fontSize="small" style={{ color: "#1976D2" }} />
+              <span style={{ fontWeight: "bold" }}>{value}</span>
+            </span>
+          ) : null;
+        },
         enableSorting: true,
       },
       {
@@ -391,18 +418,45 @@ const PipelineTable = () => {
         },
       },
       {
-        header: <WarningIcon fontSize="small" color="red"/>,
+        header: <WarningIcon fontSize="small" />,
         accessorKey: "warnings",
+        cell: ({ getValue }) => {
+          const value = getValue() || 0;
+          return value > 0 ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <WarningIcon fontSize="small" style={{ color: "#FFA500" }} />
+              <span style={{ color: "#FFA500", fontWeight: "bold" }}>{value}</span>
+            </span>
+          ) : null;
+        },
         enableSorting: true,
       },
       {
-        header: <ErrorIcon fontSize="small" color="red"/>,
+        header: <ErrorIcon fontSize="small" />,
         accessorKey: "errors",
+        cell: ({ getValue }) => {
+          const value = getValue() || 0;
+          return value > 0 ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <ErrorIcon fontSize="small" style={{ color: "#FF0000" }} />
+              <span style={{ color: "#FF0000", fontWeight: "bold" }}>{value}</span>
+            </span>
+          ) : null;
+        },
         enableSorting: true,
       },
       {
-        header: <CommentIcon fontSize="small" color="blue"/>,
+        header: <CommentIcon fontSize="small" />,
         accessorKey: "comments",
+        cell: ({ getValue }) => {
+          const value = getValue() || 0;
+          return value > 0 ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <CommentIcon fontSize="small" style={{ color: "#1976D2" }} />
+              <span style={{ fontWeight: "bold" }}>{value}</span>
+            </span>
+          ) : null;
+        },
         enableSorting: true,
       },
       {
