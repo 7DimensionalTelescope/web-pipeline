@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { baseurl } from '../config';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -12,7 +13,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/pipeline/api/status");
+        const response = await axios.get(baseurl+"/status");
         setData(response.data);
         setError(null);
       } catch (error) {

@@ -1,0 +1,101 @@
+/* Overview Component Styles */
+
+.overview-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  padding-top: 20px;
+}
+
+
+.overview-subtitle {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  padding-top: 10px;
+}
+
+
+.overview-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.status-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+
+.status-card .status {
+  font-size: 14px;
+  margin: 12px 0;
+}
+
+.status-card .last-updated {
+  font-size: 14px;
+  color: #666;
+}
+
+.plots-section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 24px;
+  min-height: 220px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.plots-section h3 {
+  margin-top: 0;
+}
+
+.plot-placeholder {
+  overflow-x: auto;
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.unit-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: #f7f7fa;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 18px;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  max-width: 100%;
+}
+
+.unit-checkboxes label {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #2c3e50;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  width: calc(10% - 8px); /* 10 per row, minus gap */
+  min-width: 80px;
+  box-sizing: border-box;
+}
+
+.unit-checkboxes label:hover {
+  background: #e9e9f3;
+}
+
+.unit-checkboxes input[type="checkbox"] {
+  accent-color: #4E79A7;
+  margin-right: 4px;
+  width: 13px;
+  height: 13px;
+} 

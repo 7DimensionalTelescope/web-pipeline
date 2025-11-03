@@ -2,7 +2,7 @@
 .app-container {
     margin: 0 auto;
     padding: 20px;
-    font-family: 'Roboto', sans-serif; /* Modern, clean font */
+    font-family: 'Roboto', sans-serif;
     background-color: #ffffff;
     color: #333;
 }
@@ -27,7 +27,6 @@ h1 {
     margin-top: 20px;
 }
 
-
 /* Table styling */
 table {
     width: 100%;
@@ -47,21 +46,6 @@ th {
     background-color: #f2f2f2;
     font-weight: 600;
     color: #555;
-}
-
-/* Responsive design for small screens */
-@media (max-width: 768px) {
-    .row-container {
-        flex-direction: column;
-    }
-
-    .component-box {
-        margin-bottom: 20px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
 }
 
 /* Additional improvements for better structure */
@@ -87,22 +71,21 @@ button:hover {
     background-color: #0056b3;
 }
 
-
 .footer {
     background-color: #333;
     color: white;
-    padding: 10px; /* Reduced padding */
+    padding: 10px;
     text-align: center;
     position: fixed;
     width: 100%;
     bottom: 0;
     left: 0;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    font-size: 14px; /* Adjust font size if necessary */
+    font-size: 14px;
 }
 
 .footer-content {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -114,4 +97,140 @@ button:hover {
 
 .footer a:hover {
     text-decoration: underline;
+}
+
+/* Tab Navigation Styles */
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 12px 0;
+    background: none;
+    padding: 0;
+}
+
+.tab-button {
+    padding: 10px 28px 10px 28px;
+    margin: 0 2px;
+    border: none;
+    background: none;
+    color: #888;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 0;
+    border-bottom: 2.5px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s;
+    outline: none;
+}
+
+.tab-button:hover {
+    color: #ffffff;
+}
+
+.tab-button.active {
+    color: #1976d2;
+    border-bottom: 2.5px solid #1976d2;
+    font-weight: 600;
+    background: none;
+}
+
+.tab-content {
+    padding: 20px 0 0 0;
+    min-height: 400px;
+}
+
+/* Media Queries for Mobile Compatibility */
+@media (max-width: 768px) {
+    /* Container */
+    .app-container {
+        padding: 15px;
+    }
+
+    /* Title */
+    h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    /* Row Container */
+    .row-container {
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .component-box {
+        margin-bottom: 20px;
+    }
+
+    /* Table */
+    table {
+        font-size: 13px;
+        display: block; /* Allow table to scroll horizontally */
+        overflow-x: auto;
+        white-space: nowrap; /* Prevent text wrapping */
+    }
+
+    th,
+    td {
+        padding: 8px 10px;
+    }
+
+    /* Button */
+    button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .footer-content {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Container */
+    .app-container {
+        padding: 10px;
+    }
+
+    /* Title */
+    h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    /* Row Container */
+    .row-container {
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    /* Table */
+    table {
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 6px 8px;
+    }
+
+    /* Button */
+    button {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 6px;
+        font-size: 11px;
+    }
 }
