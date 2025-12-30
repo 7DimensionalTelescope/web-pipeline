@@ -809,12 +809,11 @@
 .filter-present {
   font-weight: 400;
   color: #222;
-  background: var(--filter-bg-color, #eaf6e6);
+  background: #eaf6e6;
   border-radius: 4px;
   padding: 2px 6px;
   font-size: 0.85em;
 }
-
 .filter-absent {
   font-weight: 400;
   color: #bbb;
@@ -985,7 +984,7 @@
 .progress-bar-fill {
   width: var(--progress-width, 0%);
   height: 100%;
-  background-color: var(--progress-color, #fffbe6);
+  background: var(--progress-color, #fffbe6);
   border-radius: 5px;
   transition: width 0.3s, background-color 0.3s;
 }

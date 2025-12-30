@@ -12,31 +12,12 @@
 
 /* Status badge */
 .status-badge {
+  background-color: var(--status-color, #6c757d);
   color: white;
   text-align: center;
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: 500;
-}
-
-.status-badge[data-status="processing"] {
-  background-color: #FFA500;
-}
-
-.status-badge[data-status="pending"] {
-  background-color: #6c757d;
-}
-
-.status-badge[data-status="completed"] {
-  background-color: #28A745;
-}
-
-.status-badge[data-status="failed"] {
-  background-color: #FF0000;
-}
-
-.status-badge:not([data-status]) {
-  background-color: #6c757d;
 }
 
 /* PID cell */
@@ -103,31 +84,12 @@
 }
 
 .summary-status-badge {
+  background-color: var(--status-color, #6c757d);
   color: white;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
-}
-
-.summary-status-badge[data-status="processing"] {
-  background-color: #FFA500;
-}
-
-.summary-status-badge[data-status="pending"] {
-  background-color: #6c757d;
-}
-
-.summary-status-badge[data-status="completed"] {
-  background-color: #28A745;
-}
-
-.summary-status-badge[data-status="failed"] {
-  background-color: #FF0000;
-}
-
-.summary-status-badge:not([data-status]) {
-  background-color: #6c757d;
 }
 
 .summary-no-data {

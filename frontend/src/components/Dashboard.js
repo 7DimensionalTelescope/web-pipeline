@@ -36,8 +36,8 @@ const Dashboard = () => {
           <div 
             className="status-bar-fill" 
             style={{ 
-              '--progress-width': `${(value / max) * 100}%`,
-              '--progress-color': color
+              width: `${(value / max) * 100}%`,
+              backgroundColor: color 
             }}
           />
         </div>
@@ -55,21 +55,14 @@ const Dashboard = () => {
 
     return (
       <div className="core-usage-grid">
-        {cores.map((usage, index) => {
-          let usageLevel = 'low';
-          if (usage >= 90) usageLevel = 'critical';
-          else if (usage >= 70) usageLevel = 'high';
-          else if (usage >= 50) usageLevel = 'medium';
-          
-          return (
-            <div
-              key={index}
-              className="core-block"
-              data-usage-level={usageLevel}
-              title={`Core ${index + 1}: ${usage}%`}
-            />
-          );
-        })}
+        {cores.map((usage, index) => (
+          <div
+            key={index}
+            className="core-block"
+            style={{ backgroundColor: getColor(usage) }}
+            title={`Core ${index + 1}: ${usage}%`}
+          />
+        ))}
       </div>
     );
   };
@@ -143,79 +136,23 @@ const Dashboard = () => {
       ) : isCollapsed ? (
         <div className="collapsed-view">
           <div className="status-item">
-            <div 
-              className="status-circle" 
-              data-status-section="cpu"
-              data-status-level={(() => {
-                const cpuUsage = data.cpu.percent;
-                if (cpuUsage < 50) return 'good';
-                if (cpuUsage < 70) return 'warning';
-                if (cpuUsage < 90) return 'critical';
-                return 'danger';
-              })()}
-            ></div>
+            <div className="status-circle" style={{ backgroundColor: getStatusColor('cpu') }}></div>
             <span className="status-label">CPU ({data.cpu.percent}%)</span>
           </div>
           <div className="status-item">
-            <div 
-              className="status-circle" 
-              data-status-section="gpu"
-              data-status-level={(() => {
-                if (!data.gpu || data.gpu.info.length === 0) return 'good';
-                const gpuUsage = Math.max(...data.gpu.info.map(g => Math.round((g.used / g.total) * 100)));
-                if (gpuUsage < 50) return 'good';
-                if (gpuUsage < 70) return 'warning';
-                if (gpuUsage < 90) return 'critical';
-                return 'danger';
-              })()}
-            ></div>
+            <div className="status-circle" style={{ backgroundColor: getStatusColor('gpu') }}></div>
             <span className="status-label">GPU ({Math.max(...data.gpu.info.map(g => Math.round((g.used / g.total) * 100)))}%)</span>
           </div>
           <div className="status-item">
-            <div 
-              className="status-circle" 
-              data-status-section="storage"
-              data-status-level={(() => {
-                if (!data.disk || data.disk.partitions.length === 0) return 'good';
-                const diskUsage = Math.max(...data.disk.partitions.map(d => d.percent));
-                if (diskUsage < 70) return 'good';
-                if (diskUsage < 80) return 'warning';
-                if (diskUsage < 90) return 'critical';
-                return 'danger';
-              })()}
-            ></div>
+            <div className="status-circle" style={{ backgroundColor: getStatusColor('storage') }}></div>
             <span className="status-label">Storage ({Math.max(...data.disk.partitions.map(d => d.percent))}%)</span>
           </div>
           <div className="status-item">
-            <div 
-              className="status-circle" 
-              data-status-section="io"
-              data-status-level={(() => {
-                const ioRead = Math.round(data.io.read_speed);
-                const ioWrite = Math.round(data.io.write_speed);
-                const ioMax = Math.max(ioRead, ioWrite);
-                if (ioMax < 30) return 'none';
-                if (ioMax < 50) return 'critical';
-                if (ioMax < 100) return 'warning';
-                return 'good';
-              })()}
-            ></div>
+            <div className="status-circle" style={{ backgroundColor: getStatusColor('io') }}></div>
             <span className="status-label">Disk I/O ({data.io.read_speed} / {data.io.write_speed} Mbps)</span>
           </div>
           <div className="status-item">
-            <div 
-              className="status-circle" 
-              data-status-section="network"
-              data-status-level={(() => {
-                const netDown = Math.round(data.network.download_speed/1000);
-                const netUp = Math.round(data.network.upload_speed/1000);
-                const netMax = Math.max(netDown, netUp);
-                if (netMax < 1) return 'none';
-                if (netMax < 2) return 'critical';
-                if (netMax < 3) return 'warning';
-                return 'good';
-              })()}
-            ></div>
+            <div className="status-circle" style={{ backgroundColor: getStatusColor('network') }}></div>
             <span className="status-label">Network ({Math.round(data.network.download_speed/100) / 10} / {Math.round(data.network.upload_speed/100) / 10} Gbps)</span>
           </div>
         </div>

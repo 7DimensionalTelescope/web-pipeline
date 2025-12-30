@@ -645,12 +645,12 @@ const PipelineTable = ({ initialDate }) => {
                                         <td
                                           key={filter}
                                           className={hasFilter ? "filter-present" : "filter-absent"}
-                                          style={hasFilter ? {
-                                            '--filter-bg-color': getProgressColor(
+                                          style={{
+                                            background: hasFilter ? getProgressColor(
                                               (group.rows.find(r => r.filt === filter)?.progress) || 0,
                                               (group.rows.find(r => r.filt === filter)?.errors) || 0
-                                            )
-                                          } : undefined}
+                                            ) : undefined
+                                          }}
                                         >
                                           <div className="filter-cell-content">
                                             {filter}
@@ -665,12 +665,12 @@ const PipelineTable = ({ initialDate }) => {
                                           key={filter}
                                           colSpan={2}
                                           className={hasFilter ? "filter-present" : "filter-absent"}
-                                          style={hasFilter ? {
-                                            '--filter-bg-color': getProgressColor(
+                                          style={{
+                                            background: hasFilter ? getProgressColor(
                                               (group.rows.find(r => r.filt === filter)?.progress) || 0,
                                               (group.rows.find(r => r.filt === filter)?.errors) || 0
-                                            )
-                                          } : undefined}
+                                            ) : undefined
+                                          }}
                                         >
                                           {filter}
                                         </td>

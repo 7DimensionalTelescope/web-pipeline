@@ -223,7 +223,7 @@ const Queue = () => {
           return (
             <div
               className="status-badge"
-              data-status={(value || '').toLowerCase()}
+              style={{ '--status-color': getStatusColor(value) }}
             >
               {value || "N/A"}
             </div>
@@ -480,7 +480,7 @@ const Queue = () => {
                     <div key={status} className="summary-entry">
                       <div
                         className="summary-status-badge"
-                        data-status={status.toLowerCase()}
+                        style={{ '--status-color': getStatusColor(status) }}
                       >
                         {status}
                       </div>

@@ -1065,7 +1065,7 @@ function QA() {
                                 />
                                 <span 
                                   className="inst-log-color-indicator"
-                                  data-part={part}
+                                  style={{ backgroundColor: getPartColor(part) }}
                                 ></span>
                                 {part}
                               </label>

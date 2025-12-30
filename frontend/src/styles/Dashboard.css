@@ -124,8 +124,6 @@ body {
 
 .status-bar-fill {
   height: 100%;
-  width: var(--progress-width, 0%);
-  background-color: var(--progress-color, #007BFF);
   transition: width 0.3s ease-in-out;
 }
 
@@ -221,30 +219,6 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.status-circle[data-status-level="good"] {
-  background-color: #28A745;
-}
-
-.status-circle[data-status-level="warning"] {
-  background-color: #FFA500;
-}
-
-.status-circle[data-status-level="critical"] {
-  background-color: #DC3545;
-}
-
-.status-circle[data-status-level="danger"] {
-  background-color: #000000;
-}
-
-.status-circle[data-status-level="none"] {
-  background-color: #000000;
-}
-
-.status-circle:not([data-status-level]) {
-  background-color: #6C757D;
-}
-
 .status-label {
   font-size: 13px;
   font-weight: 500;
@@ -271,26 +245,6 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 2px;
-}
-
-.core-block[data-usage-level="low"] {
-  background-color: #8BC34A;
-}
-
-.core-block[data-usage-level="medium"] {
-  background-color: #FFE100;
-}
-
-.core-block[data-usage-level="high"] {
-  background-color: #FFA500;
-}
-
-.core-block[data-usage-level="critical"] {
-  background-color: #DC3545;
-}
-
-.core-block:not([data-usage-level]) {
-  background-color: #8BC34A;
 }
 
 /* Other Companion Styles */

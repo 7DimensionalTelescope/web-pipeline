@@ -175,31 +175,12 @@
 }
 
 .scheduler-status-badge {
+  background-color: var(--status-color, #6c757d);
   color: white;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
-}
-
-.scheduler-status-badge[data-status="processing"] {
-  background-color: #FFA500;
-}
-
-.scheduler-status-badge[data-status="pending"] {
-  background-color: #6c757d;
-}
-
-.scheduler-status-badge[data-status="completed"] {
-  background-color: #28A745;
-}
-
-.scheduler-status-badge[data-status="failed"] {
-  background-color: #FF0000;
-}
-
-.scheduler-status-badge:not([data-status]) {
-  background-color: #6c757d;
 }
 
 /* Plot container */

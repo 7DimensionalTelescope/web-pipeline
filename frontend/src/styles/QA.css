@@ -461,38 +461,6 @@
   margin-right: 4px;
 }
 
-.inst-log-color-indicator[data-part="cam"] {
-  background-color: #d62728;
-}
-
-.inst-log-color-indicator[data-part="fw"] {
-  background-color: #ff7f0e;
-}
-
-.inst-log-color-indicator[data-part="mount"] {
-  background-color: #2ca02c;
-}
-
-.inst-log-color-indicator[data-part="mirror"] {
-  background-color: #9467bd;
-}
-
-.inst-log-color-indicator[data-part="motor"] {
-  background-color: #8c564b;
-}
-
-.inst-log-color-indicator[data-part="focuser"] {
-  background-color: #e377c2;
-}
-
-.inst-log-color-indicator[data-part="filt_config"] {
-  background-color: #7f7f7f;
-}
-
-.inst-log-color-indicator:not([data-part]) {
-  background-color: #17becf;
-}
-
 /* Plot placeholder variants */
 .plot-placeholder-histogram {
   overflow-x: visible;
@@ -508,28 +476,4 @@
   min-width: auto;
   max-width: 800px;
   margin: 0 auto;
-}
-
-/* Chart container and statistics overlay */
-.chart-container {
-  position: relative;
-}
-
-.chart-statistics-overlay {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  font-size: 12px;
-  font-family: monospace;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.chart-statistics-title {
-  font-weight: bold;
-  margin-bottom: 5px;
 }

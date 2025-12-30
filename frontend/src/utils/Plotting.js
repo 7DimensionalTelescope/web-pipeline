@@ -8,7 +8,6 @@ import 'chartjs-adapter-date-fns';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { Line, Bar, Chart } from 'react-chartjs-2';
 import { hasBoxPlotData, getDateField } from './QAUtils';
-import '../styles/QA.css';
 
 // Shared color palette for consistent chart styling
 export const TABLEAU_20 = [
@@ -460,7 +459,7 @@ export const ChartRenderer = memo(({
     if (plot.chartType === 'histogram') {
       const statistics = chartData.statistics || {};
       return (
-        <div className="chart-container">
+        <div style={{ position: 'relative' }}>
           <Bar
             key={chartKey}
             data={{
@@ -471,8 +470,20 @@ export const ChartRenderer = memo(({
             height={CHART_DIMENSIONS.BAR_CHART.height}
           />
           {statistics.median !== undefined && (
-            <div className="chart-statistics-overlay">
-              <div className="chart-statistics-title">Statistics:</div>
+            <div style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+              padding: '10px',
+              fontSize: '12px',
+              fontFamily: 'monospace',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              zIndex: 1000
+            }}>
+              <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>Statistics:</div>
               <div>Median: {statistics.median.toFixed(3)}</div>
               <div>Mean: {statistics.mean.toFixed(3)}</div>
               <div>Std: {statistics.std.toFixed(3)}</div>

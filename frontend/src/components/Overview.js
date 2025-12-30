@@ -464,7 +464,7 @@ function Overview({ onPlotClick }) {
                   <div key={status} className="scheduler-summary-entry">
                     <div
                       className="scheduler-status-badge"
-                      data-status={status.toLowerCase()}
+                      style={{ '--status-color': getStatusColor(status) }}
                     >
                       {status}
                     </div>
