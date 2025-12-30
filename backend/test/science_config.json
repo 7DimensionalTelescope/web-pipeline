@@ -1,0 +1,16 @@
+{
+  "data": {
+    "SCIENCE": {
+      "TEST": {
+        "criteria": "within",
+        "description": "Median clipping value must be \u2265 512",
+        "value": [
+          1,
+          514
+        ]
+      }
+    }
+  },
+  "success": true,
+  "type": "science"
+}

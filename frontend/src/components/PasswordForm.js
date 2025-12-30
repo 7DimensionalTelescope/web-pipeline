@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import axios from 'axios';
+import '../App.css';
 
 const PasswordForm = ({ open, onPasswordSubmit }) => {
     const [password, setPassword] = useState('');
@@ -23,7 +24,7 @@ const PasswordForm = ({ open, onPasswordSubmit }) => {
     return (
         <Dialog open={open} disableEscapeKeyDown>
             <DialogTitle>
-                <Typography variant="h6" component="div" style={{color:"red", fontWeight:"bold"}}>
+                <Typography variant="h6" component="div" className="password-form-title">
                     Secure Access
                 </Typography>
             </DialogTitle>
